@@ -1,67 +1,97 @@
-# scripts
-<!-- ABOUT THE PROJECT -->
+# Scripts
 ## About The Project
-Scripts em Bash for vielitech linux server
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-#### Requirements:
-
-    install jq package
-
-#### Starting:
-
-In your terminal:
-1. Clone the repo:
-```
-$ git clone https://github.com/Vieli-Tech/scripts.git
-```
-2. Navigate to the directory:
-```
-$ cd scripts/
-```
+Scripts em Bash para servidores Linux VieliTech
 
 
-<!-- USAGE EXAMPLES -->
 ## Usage
 
-Folders are organized by subject. Docker's folder you will find scripts for Docker automation, for example.
-Pick the one you will need and run it
+Pastas estão organizadas por assuntos. Por exemplo, dentro da pasta docker, você encontrará scripts para automações docker.
+Escolha aquela que irá precisar e rode
 ```
-./container_update.sh (example)
+./prometheus.sh (example)
 ```
 
 ## Table of Scripts
 * Docker
-  * container_update
-    Script to update in batches. Different containers with the same image. It will stop, copy configuration, remove, and create a new container upgraded, all in once.
-  *
+  * **container_update**:<br>Script para atualizar em batch. Containers diferentes com a mesma imagem. Irá parar, copiar a configuração, remover, e criar um novo container atualizado.
+  * **prometheus.sh**: 
+  * **gump.sh**:
+  * **freeman.sh**:
+  * **ritmun.sh**:
 
-<!-- CONTRIBUTING -->
-## Contributing
+## Procedimento para Deploy de Containers Novos
 
-To contribute to this project:
+### Pré-requisitos
+- Acesso SSH ao servidor
+- Docker instalado e configurado
+### 1. Criação e Configuração do Script
+#### Acesso ao servidor
+```bash
+ssh usuario@ip-do-servidor
+```
+#### Criação do diretório (organização)
+```bash
+mkdir scripts
+cd scripts
+```
+#### Criação/Edição do script com Vim
+```bash
+vi prometheus.sh
+```
+**Comandos básicos do Vim:**
+- `i` → Modo de inserção (para editar)
+- `ESC` → Sair do modo de inserção
+- `:wq` → Salvar e sair
+- `:q` → Sair sem salvar
+#### Conteúdo do script
+```bash
+# script para deploy de containers Prometheus...
+# pode ser copiado qualquer um dos scripts na pasta containers
+# e colado em modo inserção do arquivo .sh recèm criado.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+# Deve-se apenas alterar o número de containers a serem criados
+# e a versão a ser utilizada
+```
+Após abrir e entrar em modo inserção, basta utilizar (ctrl + shift + V) para colar o script
+### 2. Permissões e Execução
+#### Tornar o script executável
+```bash
+chmod +x prometheus.sh
+```
+#### Execução do script
+```bash
+./prometheus.sh
+```
+### 3. Resolução de Problemas de Permissão do Docker
 
+#### Erro encontrado:
+```
+docker: permission denied while trying to connect to the Docker daemon socket...
+```
+#### Solução implementada:
+1. Verificar/instalar grupo docker:
+```bash
+sudo groupadd docker
+```
+2. Adicionar usuário ao grupo docker:
+```bash
+sudo usermod -aG docker vieli
+```
+3. Atualizar permissões sem logout:
+```bash
+newgrp docker
+```
+4. Verificar se o usuário foi adicionado (docker é para aprecer entre os grupos listados):
+```bash
+groups
+```
+5. Reiniciar serviço docker (se necessário):
+```bash
+sudo systemctl restart docker
+```
+### 4. Validação do Deploy
+#### Verificar containers em execução
+```bash
+docker ps
+```
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=flat-square
-[contributors-url]: https://github.com/JGabrielGruber/ObsHard_bot/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=flat-square
-[forks-url]: https://github.com/JGabrielGruber/ObsHard_bot/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=flat-square
-[stars-url]: https://github.com/JGabrielGruber/ObsHard_bot/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=flat-square
-[issues-url]: https://github.com/JGabrielGruber/ObsHard_bot/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=flat-square
-[license-url]: https://github.com/JGabrielGruber/ObsHard_bot/blob/master/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/jgabrielgruber
-[product-screenshot]: images/screenshot.png
